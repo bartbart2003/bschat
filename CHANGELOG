@@ -1,0 +1,26 @@
+CHAT v0.1:
+- Initial release
+
+CHAT v0.2:
+- Added author info
+- Removed seconds from time
+- Added background from Subtle Patterns
+- Two background colors in messages
+- Name keeping after message sent (to page close)
+- New font
+- Messages refreshing only after a message is sent (or removed)
+- Improved code
+- Added admin font
+- Responsive webpage
+
+BSChat v0.3:
+ - From this release name of this project is BSChat which stands for Bart Simple Chat
+ - Added translations support (for now only English and Polish languages are added)
+ - Added announcements
+ - Added emoticons
+ - Introduced BSChat Manager
+ - Added italic and strike font
+ - Improved messages displaying
+ - Redesigned messages creation
+ - Added MIT license
+ - Cleaned up code

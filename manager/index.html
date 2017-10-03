@@ -1,0 +1,84 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>BSChat Manager</title>
+<script src="jquery.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+@import url('https://fonts.googleapis.com/css?family=Lato');
+body {
+	font-family: 'Lato', sans-serif;
+}
+</style>
+</head>
+<body>
+<center>
+<div style="font-size: 25px">BSChat Manager v0.1 for BSChat v0.3</div>
+</center>
+<div id="messages" style="height: 66%; overflow: auto; border-top: 1px solid black; border-bottom: 1px solid black;">
+</div>
+<center>
+ <form action="insert.php" method="get" style="margin-left: 1px; margin-right: 1px;">
+  Type:<br>
+<input type="radio" name="type" value="text" checked> text
+<input type="radio" name="type" value="img"> image
+<input type="radio" name="type" value="emoticon"> emoticon
+<input type="radio" name="type" value="textadmin"> textadmin<br>
+Name:<br>
+  <input type="text" name="name" id="name"  style="width: 16vw; border: solid;"><br>
+  Content:<br>
+  <input type="text" name="content"  style="width: 90vw; border: solid;"><br>
+  <input type="submit" value="Send" style="background-color: gray; border-radius: 10px; border: 1px solid gray; width: 80px; height: 40px;">
+  <input type="hidden" name="redir" value="true" />
+  <input type="hidden" name="returnname" value="true" />
+</form>
+<div style="border: solid 1px black; background-color: lightgray;">
+<div style="font-weight: bold;">ACTIONS</div>
+<a href="action.php?action=clearall" style="color: red;">CLEAR ALL</a><br>
+ <form action="action.php" method="get" style="margin-left: 1px; margin-right: 1px;">
+  ANNOUNCEMENT<br>
+  <input type="hidden" name="action" value="changeanno" />
+  <input type="text" name="anno" style="width: 90vw; border: solid;"><br>
+  <input type="submit" value="CHANGE" style="background-color: orange; border-radius: 10px; border: 1px solid orange; width: 80px; height: 40px;">
+</form>
+</div>
+</center>
+<div style="text-align: right; font-size: 10px;">by bartbart2003 | <a href="login.html">Login</a> | <a href="killsession.php">Logout</a></div>
+<script>
+var messagesAmount;
+$.get("messagescount.php", function(data){
+  messagesAmount = data;
+});
+function loadlink(){
+    $('#messages').load('messages.php',function () {
+	$(this).unwrap();
+    });
+}
+loadlink();
+var newMessagesAmount;
+setInterval(function(){
+	$.get("messagescount.php", function(data){
+	  newMessagesAmount = data;
+	  if (messagesAmount != newMessagesAmount)
+		  {
+			  loadlink();
+			  messagesAmount = newMessagesAmount;
+		  }
+	  });
+}, 1000);
+
+function getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+document.getElementById("name").value = getParameterByName("name", window.location.href);
+</script>
+</body>
+</html>
