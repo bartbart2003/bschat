@@ -1,33 +1,45 @@
 <?php
-if ($_GET[redir] == "true")
-	header('Location: ../client/index.php');
-if ($_GET[returnname] == "true" and $_GET[redir] == "true")
-	header('Location: ../client/index.php?name='.$_GET['name']);
+require_once 'main.php';
 
-echo "BSChat";
-require_once "connect.php";
+// Check if debug mode
+$confManager = new configManager();
+$chat_debug = $confManager->getConfigProperty('debug_mode');
 
-# Get required data
-$type = "text";
-if ($_GET["type"] == "img")
-	$type = "img";
-if ($_GET["type"] == "emoticon")
-	$type = "emoticon";
+// Enable errors displaying and display return link if debug mode
+if ($chat_debug == 'true')
+{
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
+	echo "<a href='../client'>Return</a>";
+}
 
-$formatting = "normal";
-if ($_GET["formatting"] == "italic")
-	$formatting = "italic";
-if ($_GET["formatting"] == "strike")
-	$formatting = "strike";
+if ($_GET['redir'] == 'true' and $chat_debug != 'true' and $_GET['returnname'] != 'true')
+	header('Location: ../client');
+if ($_GET['returnname'] == 'true' and $_GET['redir'] == 'true' and $chat_debug != 'true')
+	header('Location: ../client/?name='.$_GET['name']);
 
-$name = $_GET["name"];
-$content = $_GET["content"];
+# Get type
+$type = 'text';
+if ($_GET['type'] == 'img')
+	$type = 'img';
+if ($_GET['type'] == 'emoji')
+	$type = 'emoji';
 
-# Insert into database
-$query = $conn->prepare("INSERT INTO chattable (time, type, name, content, formatting) VALUES (?,?,?,?,?)");
-$query->bind_param('sssss', date('Y-m-d H:i'), $type, $name, $content, $formatting);
-$results = $query->execute();
+# Get formatting
+$formatting = 'normal';
+if ($_GET['formatting'] == 'italic')
+	$formatting = 'italic';
+if ($_GET['formatting'] == 'strike')
+	$formatting = 'strike';
+if ($_GET['formatting'] == 'underline')
+	$formatting = 'underline';
+	
+# Get name and content
+$name = $_GET['name'];
+$content = $_GET['content'];
 
-# Display return link
-echo "<br><a href=../client/index.php>Return</a>";
+# Insert message
+$msgManager = new messageManager();
+$msgManager->insertMessage($type, $name, $content, $formatting);
 ?>

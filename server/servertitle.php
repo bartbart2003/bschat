@@ -1,4 +1,5 @@
 <?php
+header('Content-type: text/html; charset=utf-8');
 require_once 'main.php';
 
 // Check if debug mode
@@ -13,6 +14,7 @@ if ($chat_debug == 'true')
 	error_reporting(E_ALL);
 }
 
-$msgManager = new messageManager();
-echo $msgManager->getMessagesCount();
+$confManager = new configManager();
+$servertitle = $confManager->getConfigProperty('servertitle');
+echo htmlentities($servertitle);
 ?>

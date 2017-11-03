@@ -24,3 +24,16 @@ BSChat v0.3:
  - Redesigned messages creation
  - Added MIT license
  - Cleaned up code
+
+BSChat v0.4:
+ - Code reorganization
+ - Server name
+ - Changed 'Emoticon' -> 'Emoji' (thanks hkktr!)
+ - 2 new emojis
+ - Underline font
+ - About page
+ - Chat rules
+ - Added admin functions in server
+ - Removed BSChat Manager (will be probably replaced with admin accounts in next release)
+ - Debug mode
+ - Some small design changes
