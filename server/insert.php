@@ -13,8 +13,10 @@ switch ($_GET['type'])
 {
 	case 'img':
 		$type = 'img';
+		break;
 	case 'emoji':
 		$type = 'emoji';
+		break;
 }
 
 # Get formatting
@@ -23,10 +25,13 @@ switch ($_GET['formatting'])
 {
 	case 'italic':
 		$formatting = 'italic';
+		break;
 	case 'strike':
 		$formatting = 'strike';
+		break;
 	case 'underline':
 		$formatting = 'underline';
+		break;
 }
 	
 # Get username and content
